@@ -9,6 +9,12 @@ Not yet released.
 
 ### Changes that break callers
 
+- In Lean, `verifyBlobKzgProof_binding` states its hypotheses as the specification converts the commitment and the proof.
+  It takes the raw bytes, the values that `bytesToKzgCommitment` and `bytesToKzgProof` return, and the points that `uncompressG1` decodes from them.
+  A caller that holds `validateKzgG1Point b = .ok C` gets the two new hypotheses from `bytesToKzgCommitment_of_validateKzgG1Point` and `uncompressG1_of_validateKzgG1Point`.
+  The same holds for the proof, with `bytesToKzgProof_of_validateKzgG1Point`.
+  The C exports and the Python functions are unchanged.
+
 - In Lean, the gossip message ID has its length in its type.
   `Gossip.messageId` returns `Vector UInt8 20` in place of a `ByteArray`.
   A caller that needs a `ByteArray` takes `Base.packBytes (messageId fork topic data)`.
